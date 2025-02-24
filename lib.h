@@ -29,5 +29,6 @@ void atualizar_matriz(int nivel);
 
 void main_loop();
 
+void inspeciona();
 
 #endif
