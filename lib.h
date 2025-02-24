@@ -13,6 +13,7 @@
 #define ADC_PIN 26    // eixo Y do joystick
 #define PWM_PIN 12    // led azul (servo)
 #define MATRIX_PIN 7  
+#define DEBOUNCE_TIME 50
 
 void inicializar_IO();
 

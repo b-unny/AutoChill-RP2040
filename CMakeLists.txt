@@ -22,6 +22,7 @@ target_link_libraries(FinalProject
 	hardware_adc
 	hardware_pwm
 	hardware_pio
+	hardware_timer
 )
 
 # Habilitar saída USB (opcional)

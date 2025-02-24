@@ -4,7 +4,9 @@ const uint16_t wrap = 4096;
 const float clkdiv = 4.0;
 volatile int8_t temp = 0;
 volatile uint8_t peso = 0;
-const uint8_t peso_max = 10;			  
+const uint8_t peso_max = 10;
+volatile uint32_t ultimo_tempo = 0;
+
 
 void inicializar_IO()
 {
@@ -33,8 +35,13 @@ void inicializar_IO()
 
 void buttons_callback(uint pino, uint32_t events)
 { 
-	(temp -10 && temp < 40) ? ((pino == BUTTON_A) ? temp-=5 : temp+=5) : (void)0; 
-	sleep_ms(50);
+	uint32_t tempo_atual = to_ms_since_boot(get_absolute_time());
+
+	if(tempo_atual - ultimo_tempo >= DEBOUNCE_TIME)
+	{ 
+		(temp -10 && temp < 40) ? ((pino == BUTTON_A) ? temp-=5 : temp+=5) : (void)0; 
+		ultimo_tempo = tempo_atual;
+	}
 }
 
 void obter_peso()
@@ -46,7 +53,7 @@ void obter_peso()
 void config_servo(int nivel)
 {
 	float pulso = (float)(1.0+(nivel-1)*0.2); 
-	uint16_t duty = (uint16_t)(pulso/20.0)*4096;
+	uint16_t duty = (uint16_t)((pulso/20.0)*4096);
 	pwm_set_gpio_level(PWM_PIN, duty);
     printf("Paasando por config_servo: pulso = %f, duty = %d\n", pulso, duty);
 }
@@ -89,6 +96,7 @@ void put_pixel(uint32_t pixel)
 
 void atualizar_matriz(int nivel)
 {
+
 	static const uint8_t numeros[6][25]=
 	{
 	        { 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0 }, // 1
@@ -99,7 +107,7 @@ void atualizar_matriz(int nivel)
             { 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0 }, // 6
         };
 	
-	uint32_t color = urgb_u32(64, 50, 55);
+	uint32_t rosa = urgb_u32(64, 50, 55);
     
 	for(int i=0; i < 25; i++)
 		put_pixel((numeros[nivel-1][i]) ? rosa : 0);
