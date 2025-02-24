@@ -1,6 +1,7 @@
 #ifndef LIB_H
 #define LIB_H
 
+#include<stdio.h>
 #include"pico/stdlib.h"
 #include"hardware/adc.h"
 #include"hardware/pwm.h"
