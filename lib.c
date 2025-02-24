@@ -55,7 +55,7 @@ void config_servo(int nivel)
 	float pulso = (float)(1.0+(nivel-1)*0.2); 
 	uint16_t duty = (uint16_t)((pulso/20.0)*4096);
 	pwm_set_gpio_level(PWM_PIN, duty);
-    printf("Paasando por config_servo: pulso = %f, duty = %d\n", pulso, duty);
+    	printf("Paasando por config_servo: pulso = %f, duty = %d\n", pulso, duty);
 }
 
 void main_loop()
@@ -80,7 +80,7 @@ void main_loop()
     if(nivel != -1)
     { 
         config_servo(nivel);
-	    atualizar_matriz(nivel-1);
+	atualizar_matriz(nivel-1);
     }
 }
 
@@ -99,7 +99,7 @@ void atualizar_matriz(int nivel)
 
 	static const uint8_t numeros[6][25]=
 	{
-	        { 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0 }, // 1
+	    { 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0 }, // 1
             { 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0 }, // 2
             { 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0 }, // 3
             { 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0 }, // 4
