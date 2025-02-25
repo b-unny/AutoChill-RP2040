@@ -39,8 +39,12 @@ void buttons_callback(uint pino, uint32_t events)
 
 	if(tempo_atual - ultimo_tempo >= DEBOUNCE_TIME)
 	{ 
-		(temp -10 && temp < 40) ? ((pino == BUTTON_A) ? temp-=5 : temp+=5) : (void)0; 
-		ultimo_tempo = tempo_atual;
+		if(temp -10 && temp < 40)
+		{
+			if(pino == BUTTON_A) temp-=5;
+			else if(pino == BUTTON_B) temp+=5; 
+			ultimo_tempo = tempo_atual;
+		}
 	}
 }
 
