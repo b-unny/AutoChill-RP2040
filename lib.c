@@ -1,7 +1,7 @@
 #include"lib.h"
 
-const uint16_t wrap = 4096;
-const float clkdiv = 4.0;
+const uint16_t wrap = 19999;
+const float clkdiv = 125.0;
 volatile int8_t temp = 0;
 volatile uint8_t peso = 0;
 const uint8_t peso_max = 10;
@@ -57,18 +57,18 @@ void obter_peso()
 void config_servo(int nivel)
 {
 	uint slice = pwm_gpio_to_slice_num(PWM_PIN);
-	const uint16_t duty_cycle[] = {205, 273, 340, 307, 375, 442, 409}; 
-	pwm_set_gpio_level(PWM_PIN, duty_cycle[nivel]);
+	float duty_cycle[6] = {0.025, 0.044, 0.063, 0.082, 0.101, 0.12}; 
+	pwm_set_gpio_level(PWM_PIN, (uint32_t)(duty_cycle[nivel]*wrap));
   	printf("Paasando por config_servo\n");
 }
 
 void main_loop()
 {
     int matrizNiveis[4][3] = {
-        {1, 2, 3}, // temp < 10
-        {2, 3, 4}, // 10 < temp < 20
-        {4, 5, 6}, // 20 < temp < 30
-        {5, 6, 6}  // 30 < temp < 40
+        {0, 1, 2}, // temp < 10
+        {1, 2, 3}, // 10 < temp < 20
+        {3, 4, 5}, // 20 < temp < 30
+        {4, 5, 5}  // 30 < temp < 40
     };
 
     int faixaTemp = (temp < 10) ? 0 :
@@ -84,7 +84,7 @@ void main_loop()
     if(nivel != -1)
     { 
         config_servo(nivel);
-		atualizar_matriz(nivel);
+	atualizar_matriz(nivel);
     }
 }
 
