@@ -39,7 +39,7 @@ void buttons_callback(uint pino, uint32_t events)
 
 	if(tempo_atual - ultimo_tempo >= DEBOUNCE_TIME)
 	{ 
-		if(temp -10 && temp < 40)
+		if(temp >-10 && temp < 40)
 		{
 			if(pino == BUTTON_A) temp-=5;
 			else if(pino == BUTTON_B) temp+=5; 
@@ -51,15 +51,15 @@ void buttons_callback(uint pino, uint32_t events)
 void obter_peso()
 {
 	adc_select_input(0);
-	peso = (adc_read() / 4095) * peso_max;
+	peso = (uint8_t)((adc_read() / 4095.0) * peso_max);
 }
 
 void config_servo(int nivel)
 {
-	float pulso = (float)(1.0+(nivel-1)*0.2); 
-	uint16_t duty = (uint16_t)((pulso/20.0)*4096);
-	pwm_set_gpio_level(PWM_PIN, duty);
-    	printf("Paasando por config_servo: pulso = %f, duty = %d\n", pulso, duty);
+	uint slice = pwm_gpio_to_slice_num(PWM_PIN);
+	const uint16_t duty_cycle[] = {205, 273, 340, 307, 375, 442, 409}; 
+	pwm_set_gpio_level(PWM_PIN, duty_cycle[nivel]);
+  	printf("Paasando por config_servo\n");
 }
 
 void main_loop()
@@ -84,7 +84,7 @@ void main_loop()
     if(nivel != -1)
     { 
         config_servo(nivel);
-	atualizar_matriz(nivel-1);
+		atualizar_matriz(nivel);
     }
 }
 
