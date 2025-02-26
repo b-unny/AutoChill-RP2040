@@ -39,12 +39,15 @@ void buttons_callback(uint pino, uint32_t events)
 
 	if(tempo_atual - ultimo_tempo >= DEBOUNCE_TIME)
 	{ 
-		if(temp >-10 && temp < 40)
+		if(pino == BUTTON_A)
 		{
-			if(pino == BUTTON_A) temp-=5;
-			else if(pino == BUTTON_B) temp+=5; 
-			ultimo_tempo = tempo_atual;
+			if(temp>=-10) temp-=2;
 		}
+		else if(pino == BUTTON_B)
+		{
+			if(temp<=40) temp+=2;
+		}
+		ultimo_tempo=tempo_atual;
 	}
 }
 
@@ -114,7 +117,7 @@ void atualizar_matriz(int nivel)
 	uint32_t rosa = urgb_u32(64, 50, 55);
     
 	for(int i=0; i < 25; i++)
-		put_pixel((numeros[nivel-1][i]) ? rosa : 0);
+		put_pixel((numeros[nivel][i]) ? rosa : 0);
 
 }
 
