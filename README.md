@@ -1,4 +1,6 @@
-# Sistema Embarcado para Controle de Temperatura Automático em Refrigeradores Manuais
+# AutoChill
+
+### Sistema Embarcado para Controle de Temperatura Automático em Refrigeradores Manuais
 
 ### Descrição do Projeto
 
