@@ -39,5 +39,5 @@ lib.h: Cabeçalho contendo definição de macros, bibliotecas e assinaturas das 
 
 ws2812.pio: Programa PIO utilizado para controle da matriz de LEDs (não desenvolvido por mim, referenciado na seção de créditos).
 
-[Link para demostração do projeto na BitDogLab]()
+[Link para apresentação e demostração do funcionamento na BitDogLab](https://drive.google.com/file/d/1XJIb9zb3lr4dVveIIRlc6OgQWYbgKKJ9/view?usp=sharing)
 
